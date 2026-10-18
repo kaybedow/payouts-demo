@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Реєстр виплат</title>
+<meta name="description" content="Облік виплат інвесторам і звірка сум">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span>Реєстр виплат</span>
+    </div>
+    <div class="top-actions">
+      <label class="btn btn-quiet" for="csvInput">Імпорт CSV</label>
+      <input id="csvInput" type="file" accept=".csv,text/csv" hidden>
+      <button class="btn btn-quiet" type="button" id="sampleBtn">Приклад CSV</button>
+      <button class="btn" type="button" id="exportBtn">Експорт CSV</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="recon" aria-labelledby="reconTitle">
+    <p class="recon-period" id="periodLabel"></p>
+    <h1 id="reconTitle" class="recon-title"></h1>
+    <div class="recon-bar" id="reconBar" role="img"></div>
+    <ul class="recon-legend">
+      <li><span class="dot ok"></span>Зійшлося</li>
+      <li><span class="dot bad"></span>Розбіжність</li>
+      <li><span class="dot wait"></span>Ще не виплачено</li>
+    </ul>
+    <ol class="issues" id="issues"></ol>
+  </section>
+
+  <section class="totals" aria-label="Підсумки">
+    <div><span>Вкладено</span><strong id="tInvested"></strong></div>
+    <div><span>Нараховано</span><strong id="tExpected"></strong></div>
+    <div><span>Виплачено</span><strong id="tPaid"></strong></div>
+    <div><span>Різниця</span><strong id="tDiff"></strong></div>
+  </section>
+
+  <section class="panel" aria-labelledby="chartTitle">
+    <div class="panel-head">
+      <h2 id="chartTitle">По місяцях</h2>
+      <div class="chart-key"><span class="k k-exp"></span>нараховано <span class="k k-paid"></span>виплачено</div>
+    </div>
+    <div class="chart" id="chart"></div>
+  </section>
+
+  <section class="panel" aria-labelledby="tableTitle">
+    <div class="panel-head">
+      <h2 id="tableTitle">Виплати</h2>
+      <span class="count" id="rowCount"></span>
+    </div>
+
+    <form class="filters" id="filters">
+      <label>Місяць
+        <select name="month" id="fMonth"></select>
+      </label>
+      <label>Продукт
+        <select name="product" id="fProduct"></select>
+      </label>
+      <label>Статус
+        <select name="status" id="fStatus">
+          <option value="">Усі</option>
+          <option value="ok">Зійшлося</option>
+          <option value="bad">Розбіжність</option>
+          <option value="wait">Ще не виплачено</option>
+        </select>
+      </label>
+      <label class="grow">Інвестор
+        <input type="search" name="q" id="fQuery" placeholder="Ім'я">
+      </label>
+    </form>
+
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th><button type="button" data-sort="date">Дата</button></th>
+            <th><button type="button" data-sort="investor">Інвестор</button></th>
+            <th><button type="button" data-sort="product">Продукт</button></th>
+            <th class="num"><button type="button" data-sort="amount">Вклад</button></th>
+            <th class="num"><button type="button" data-sort="rate">Ставка</button></th>
+            <th class="num"><button type="button" data-sort="expected">Нараховано</button></th>
+            <th class="num"><button type="button" data-sort="paid">Виплачено</button></th>
+            <th><button type="button" data-sort="status">Статус</button></th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      <p class="empty" id="empty" hidden>Нічого не знайдено, спробуйте змінити фільтри</p>
+    </div>
+  </section>
+
+  <p class="toast" id="toast" role="status" hidden></p>
+</main>
+
+<footer class="foot wrap">
+  <p>Демо, дані вигадані. Нарахування: вклад × ставка ÷ 12.</p>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
